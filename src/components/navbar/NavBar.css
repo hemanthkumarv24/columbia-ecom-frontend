@@ -1,0 +1,94 @@
+.navbar {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
+
+}
+
+
+.top-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0074cc;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin: 0 20px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+}
+
+.search-icon {
+  padding: 8px;
+  background-color: #0074cc;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+.nav-icons  {
+  margin-left: 15px;
+  text-decoration: none;
+  color: #333;
+  font-size: 0.9rem;
+  display:flex;
+  align-items:center;
+  justify-content: space-around;
+  justify-items: center;
+  gap: 3px;
+  /* flex-direction: column; */
+}
+
+.badge {
+  background-color: #0074cc;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  margin-left: 4px;
+}
+
+.category-menu {
+  display: flex;
+  justify-content: center;
+  background-color: #f8f8f8;
+  padding: 10px 0;
+}
+
+.category-menu a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #0074cc;
+  font-weight: 500;
+}
+
+.promo-banner {
+  background-color: #0074cc;
+  color: white;
+  text-align: center;
+  padding: 8px;
+  font-size: 0.9rem;
+}
+
+.inner-icons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
