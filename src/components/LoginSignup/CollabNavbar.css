@@ -1,0 +1,15 @@
+.collab-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #001529;
+  padding: 0 24px;
+  height: 64px;
+}
+
+.collab-navbar .logo {
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}

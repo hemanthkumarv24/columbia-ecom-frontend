@@ -1,0 +1,29 @@
+/* .columbia-auth-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+} */
+
+.auth-container {
+  max-width: 1200px;
+  width: 100%;
+}
+
+.auth-row {
+  align-items: stretch;
+}
+
+.auth-card, .info-card {
+  height: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+}
+
+.auth-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
