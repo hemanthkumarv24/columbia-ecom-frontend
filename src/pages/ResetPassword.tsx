@@ -21,6 +21,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const { Title, Text } = Typography;
 
@@ -42,7 +43,7 @@ const ResetPassword: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://localhost:7028/api/User/ResetPassword', {
+      const response = await fetch(`${apiUrl}/ResetPassword`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +56,10 @@ const ResetPassword: React.FC = () => {
       if (response.ok) {
         AntMessage.success('Password reset successful!');
         dispatch(setToken(data.token));
+
+
         navigate('/home')
+
         
       } else {
         AntMessage.error(data.error || 'Password reset failed.');

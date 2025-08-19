@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../store/authSlice';
 
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const { Title } = Typography;
 
@@ -23,7 +24,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('https://localhost:7028/api/User/Login', {
+      const response = await axios.post(`${apiUrl}/Login`, {
         email,
         PasswordHash: passwordHash,
       });
