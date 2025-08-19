@@ -30,7 +30,7 @@ const UserList = () => {
           },
         });
         setUsers(response.data);
-      } catch (error: any) {
+      } catch  {
         message.error('Failed to load users');
       } finally {
         setLoading(false);

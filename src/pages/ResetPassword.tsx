@@ -18,7 +18,7 @@ import {
   LockOutlined,
   KeyOutlined,
 } from '@ant-design/icons';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 const apiUrl = import.meta.env.VITE_API_URL;
@@ -33,7 +33,7 @@ const ResetPassword: React.FC = () => {
   const [email, setEmail] = useState('');
   const [passwordHash, setPasswordHash] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  // const navigate= useNavigate();
+  const navigate= useNavigate();
   
   
         console.log(token)
@@ -57,11 +57,14 @@ const ResetPassword: React.FC = () => {
         AntMessage.success('Password reset successful!');
         dispatch(setToken(data.token));
 
+
+        navigate('/home')
+
         
       } else {
         AntMessage.error(data.error || 'Password reset failed.');
       }
-    } catch (error) {
+    } catch {
       AntMessage.error('An error occurred.');
 
     }
