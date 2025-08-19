@@ -55,11 +55,12 @@ const ResetPassword: React.FC = () => {
       if (response.ok) {
         AntMessage.success('Password reset successful!');
         dispatch(setToken(data.token));
+        navigate('/home')
         
       } else {
         AntMessage.error(data.error || 'Password reset failed.');
       }
-    } catch (error) {
+    } catch {
       AntMessage.error('An error occurred.');
 
     }
