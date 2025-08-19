@@ -12,6 +12,7 @@ interface User {
   username: string;
   email: string;
 }
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 const UserList = () => {
@@ -23,7 +24,7 @@ const UserList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('https://localhost:7028/api/User/GetUsers', {
+        const response = await axios.get(`${apiUrl}/GetUsers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
