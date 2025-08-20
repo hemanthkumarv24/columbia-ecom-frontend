@@ -7,6 +7,8 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 import ResetPassword from './pages/ResetPassword'
 import HomePage from './pages/Home'
+import ProductDetailPage from './components/products/ProductDetailPage'
+import ProductForm from './pages/ProductForm'
 function App() {
   
 
@@ -21,6 +23,9 @@ function App() {
         <Route path="/employeedetails" element={<EmployeeList />} />
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/home" element={<HomePage/>}/>
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/createproduct" element={<ProductForm/>}/>
+
 
 
 
