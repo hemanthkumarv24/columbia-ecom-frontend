@@ -9,6 +9,9 @@ import ResetPassword from './pages/ResetPassword'
 import HomePage from './pages/Home'
 import ProductDetailPage from './components/products/ProductDetailPage'
 import ProductForm from './pages/ProductForm'
+import DeleteProduct from './pages/DeleteProduct'
+import ProductPage from './pages/ProductPage'
+import AdminPage from './pages/AdminPage'
 function App() {
   
 
@@ -24,7 +27,12 @@ function App() {
         <Route path="/ResetPassword" element={<ResetPassword/>}/>
         <Route path="/home" element={<HomePage/>}/>
         <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/viewproducts" element={<ProductPage />} />
+
         <Route path="/createproduct" element={<ProductForm/>}/>
+        <Route path="/deleteproduct" element={<DeleteProduct/>}/>
+        <Route path="/admin" element={<AdminPage />} />
+
 
 
 
