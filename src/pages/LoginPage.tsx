@@ -20,7 +20,6 @@ const Login = () => {
   const navigate = useNavigate();
 
     const dispatch = useDispatch();
-console.log('API URL:', import.meta.env.VITE_API_URL);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
@@ -29,11 +28,10 @@ console.log('API URL:', import.meta.env.VITE_API_URL);
         email,
         PasswordHash: passwordHash,
       });
-      const { jwt, typeofuser } = response.data;
-      dispatch(setToken(jwt));
+      const { token, typeofuser } = response.data;
+      dispatch(setToken(token));
       message.success('Login successful!');
 
-      
     if (typeofuser === 'user') {
       navigate('/home');
     } else {
