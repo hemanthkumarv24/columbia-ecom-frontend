@@ -25,7 +25,7 @@ const NavBar = () => {
     { icon: <ShoppingOutlined />, label: "Bulk Order", path: "/bulk-order" },
     { icon: <CustomerServiceOutlined />, label: "Support", path: "/support" },
     { icon: <CompassOutlined />, label: "Pincode", path: "/pincode" },
-    { icon: <UserOutlined />, label: "Account", path: "/account" },
+    { icon: <UserOutlined />, label: "Account", path: "/profile" },
     { icon: <HeartOutlined />, label: "Wishlist", path: "/wishlist" },
     { icon: <ShoppingCartOutlined />, label: "Cart", path: "/cart" },
   ];
