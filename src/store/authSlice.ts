@@ -6,7 +6,7 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  token: localStorage.getItem('jwtToken') || null,
+  token: sessionStorage.getItem('jwtToken') || null
 };
 
 const authSlice = createSlice({
@@ -15,11 +15,11 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action: PayloadAction<string>) {
       state.token = action.payload;
-      localStorage.setItem('jwtToken', action.payload);
+      sessionStorage.setItem('jwtToken', action.payload);
     },
     clearToken(state) {
       state.token = null;
-      localStorage.removeItem('jwtToken');
+      sessionStorage.removeItem('jwtToken'); 
     },
   },
 });
