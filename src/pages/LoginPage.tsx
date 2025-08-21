@@ -20,7 +20,7 @@ const Login = () => {
   const navigate = useNavigate();
 
     const dispatch = useDispatch();
-
+console.log('API URL:', import.meta.env.VITE_API_URL);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
