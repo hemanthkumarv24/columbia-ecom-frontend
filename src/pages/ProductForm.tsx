@@ -14,6 +14,8 @@ import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
 import type { UploadFile } from 'antd/es/upload/interface';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store/store';
 
 const { Title } = Typography;
 
@@ -44,7 +46,8 @@ const ProductForm: React.FC = () => {
 const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
 
 const navigate = useNavigate();
-
+  const token = useSelector((state: RootState) => state.auth.token);
+console.log(token)
 const handleSubmit = async (values: ProductUpdateFormValues) => {
   const formData = new FormData();
 
@@ -66,6 +69,8 @@ const handleSubmit = async (values: ProductUpdateFormValues) => {
     const response = await axios.post(`${apiUrl}/Products/create`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${token}`,
+
       },
     });
 

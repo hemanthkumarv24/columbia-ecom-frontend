@@ -15,6 +15,7 @@ const { Title } = Typography;
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+
   const [passwordHash, setPasswordHash] = useState('');
   const navigate = useNavigate();
 
@@ -28,11 +29,16 @@ console.log('API URL:', import.meta.env.VITE_API_URL);
         email,
         PasswordHash: passwordHash,
       });
-
-      const jwt = response.data.token; // adjust if needed
+      const { jwt, typeofuser } = response.data;
       dispatch(setToken(jwt));
       message.success('Login successful!');
+
+      
+    if (typeofuser === 'user') {
       navigate('/home');
+    } else {
+      navigate('/admin');
+    }
     } catch (error: any) {
       message.error(error?.response?.data?.message || 'Login failed!');
     } finally {
