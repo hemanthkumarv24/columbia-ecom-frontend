@@ -6,20 +6,23 @@ import 'antd/dist/reset.css';
 import '../components/login/Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setToken } from '../store/authSlice';
+import { setToken, setUserID } from '../store/authSlice';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const { Title } = Typography;
+
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
 
   const [passwordHash, setPasswordHash] = useState('');
+  
   const navigate = useNavigate();
 
     const dispatch = useDispatch();
+    console.log('API URL:', import.meta.env.VITE_API_URL);
   const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
@@ -28,6 +31,13 @@ const Login = () => {
         email,
         PasswordHash: passwordHash,
       });
+
+      const jwt = response.data.token;
+      const userIdFromResponse = response.data.id;
+  dispatch(setToken(jwt));
+  dispatch(setUserID(userIdFromResponse));
+  localStorage.setItem('userID', userIdFromResponse);
+      console.log(response.data);
       const { token, typeofuser } = response.data;
       dispatch(setToken(token));
       message.success('Login successful!');
