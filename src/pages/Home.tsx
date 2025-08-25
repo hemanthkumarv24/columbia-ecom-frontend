@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <DashboardLayout>
     <div className="homepage">
-      <ProductPage/>
+      <ProductPage /> 
     </div>
     </DashboardLayout>
   );

@@ -6,21 +6,23 @@ import 'antd/dist/reset.css';
 import '../components/login/Login.css';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setToken } from '../store/authSlice';
+import { setToken, setUserID } from '../store/authSlice';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const { Title } = Typography;
 
+
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [passwordHash, setPasswordHash] = useState('');
+  
   const navigate = useNavigate();
 
     const dispatch = useDispatch();
-console.log('API URL:', import.meta.env.VITE_API_URL);
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+    console.log('API URL:', import.meta.env.VITE_API_URL);
+    const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -29,8 +31,12 @@ console.log('API URL:', import.meta.env.VITE_API_URL);
         PasswordHash: passwordHash,
       });
 
-      const jwt = response.data.token; // adjust if needed
-      dispatch(setToken(jwt));
+      const jwt = response.data.token;
+      const userIdFromResponse = response.data.id;
+  dispatch(setToken(jwt));
+  dispatch(setUserID(userIdFromResponse));
+  localStorage.setItem('userID', userIdFromResponse);
+      console.log(response.data);
       message.success('Login successful!');
       navigate('/home');
     } catch (error: any) {
