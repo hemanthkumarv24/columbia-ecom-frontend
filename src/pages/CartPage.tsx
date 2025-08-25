@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState, useContext } from 'react';
 import { CartContext } from '../context/CartContext';
 import axios from 'axios';
@@ -14,20 +13,38 @@ const CartPage: React.FC = () => {
   const userId = useSelector((state: RootState) => state.auth.userID);
   const [cartItems, setCartItems] = useState<any[]>([]);
   const { refreshCartCount } = useContext(CartContext);
-
   const cartApiUrl = import.meta.env.VITE_CART_API_URL;
+  const ApiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
+
+  const navigate = useNavigate();
+  const [loadingId, setLoadingId] = useState<number | null>(null);
 
   const fetchCartItems = async () => {
     try {
-      const response = await axios.get(`${cartApiUrl}/Cart/items/${userId}`);
-      setCartItems(response.data);
+      const cartResponse = await axios.get(`${cartApiUrl}/Cart/items/${userId}`);
+      const cartData = cartResponse.data;
+
+      const enrichedCartItems = await Promise.all(
+        cartData.map(async (item: any) => {
+          try {
+            const productResponse = await axios.get(`${ApiUrl}/Products/${item.productId}`);
+            return {
+              ...item,
+              ...productResponse.data, // Merge product details
+            };
+          } catch (productError) {
+            console.error(`Failed to fetch product ${item.productId}`, productError);
+            return item; // Fallback to original item
+          }
+        })
+      );
+
+      setCartItems(enrichedCartItems);
     } catch (error) {
       message.error('Failed to load cart items');
     }
   };
 
-  const [loadingId, setLoadingId] = useState<number | null>(null);
-  const navigate = useNavigate();
   const updateQuantity = async (productId: number, quantity: number) => {
     if (!userId) return;
     setLoadingId(productId);
@@ -65,20 +82,20 @@ const CartPage: React.FC = () => {
 
   const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
- const getImageUrl = (item: any): string => {
-  const images = item.productImages?.$values;
+  const getImageUrl = (item: any): string => {
+    const images = item.productImages?.$values;
+    if (Array.isArray(images) && images.length > 0) {
+      return images[0].imageUrl;
+    }
+    return 'https://via.placeholder.com/80?text=No+Image';
+  };
 
-  if (Array.isArray(images) && images.length > 0) {
-    return images[0].imageUrl;
-  }
-
-  return 'https://via.placeholder.com/80?text=No+Image';
-};
-
-
-  // Optimistic UI update for quantity
   const handleOptimisticQuantity = (productId: number, newQuantity: number) => {
-    setCartItems((prev) => prev.map(item => item.productId === productId ? { ...item, quantity: newQuantity } : item));
+    setCartItems((prev) =>
+      prev.map((item) =>
+        item.productId === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
     updateQuantity(productId, newQuantity);
   };
 
@@ -95,7 +112,9 @@ const CartPage: React.FC = () => {
               actions={[
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <Button
-                    onClick={() => handleOptimisticQuantity(item.productId, Math.max(1, (item.quantity || 1) - 1))}
+                    onClick={() =>
+                      handleOptimisticQuantity(item.productId, Math.max(1, (item.quantity || 1) - 1))
+                    }
                     size="small"
                   >
                     -
@@ -103,36 +122,43 @@ const CartPage: React.FC = () => {
                   <InputNumber
                     min={1}
                     value={item.quantity}
-                    onChange={(value) => handleOptimisticQuantity(item.productId, value || 1)}
+                    onChange={(value) =>
+                      handleOptimisticQuantity(item.productId, value || 1)
+                    }
                     style={{ width: 60 }}
                   />
                   <Button
-                    onClick={() => handleOptimisticQuantity(item.productId, (item.quantity || 1) + 1)}
+                    onClick={() =>
+                      handleOptimisticQuantity(item.productId, (item.quantity || 1) + 1)
+                    }
                     size="small"
                   >
                     +
                   </Button>
                 </div>,
-                <Button danger onClick={() => removeItem(item.productId)} disabled={loadingId === item.productId}>
+                <Button
+                  danger
+                  onClick={() => removeItem(item.productId)}
+                  disabled={loadingId === item.productId}
+                >
                   Remove
                 </Button>,
               ]}
             >
               <List.Item.Meta
                 avatar={
-                    <Image
+                  <Image
                     width={80}
                     height={80}
                     src={getImageUrl(item)}
                     fallback="https://via.placeholder.com/80?text=No+Image"
                     style={{ objectFit: 'cover', borderRadius: 4 }}
-                    />
+                  />
                 }
                 title={item.productName}
                 description={`Price: ₹${item.price}`}
                 style={{ paddingRight: 16 }}
-                />
-
+              />
             </List.Item>
           )}
         />
