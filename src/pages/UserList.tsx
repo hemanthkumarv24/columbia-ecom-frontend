@@ -18,8 +18,8 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const UserList = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-
   const token = useSelector((state: RootState) => state.auth.token);
+  console.log("USRE PROFILE: ", token)
 
   useEffect(() => {
     const fetchUsers = async () => {

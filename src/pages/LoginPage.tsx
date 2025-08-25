@@ -16,13 +16,14 @@ const { Title } = Typography;
 const Login = () => {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
+
   const [passwordHash, setPasswordHash] = useState('');
   
   const navigate = useNavigate();
 
     const dispatch = useDispatch();
     console.log('API URL:', import.meta.env.VITE_API_URL);
-    const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -37,8 +38,15 @@ const Login = () => {
   dispatch(setUserID(userIdFromResponse));
   localStorage.setItem('userID', userIdFromResponse);
       console.log(response.data);
+      const { token, typeofuser } = response.data;
+      dispatch(setToken(token));
       message.success('Login successful!');
+
+    if (typeofuser === 'user') {
       navigate('/home');
+    } else {
+      navigate('/admin');
+    }
     } catch (error: any) {
       message.error(error?.response?.data?.message || 'Login failed!');
     } finally {
