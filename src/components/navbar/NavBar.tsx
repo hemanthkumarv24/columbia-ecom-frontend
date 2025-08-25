@@ -33,7 +33,7 @@ const NavBar = () => {
   return (
     <header className="navbar">
       <div className="top-nav">
-        <img src={ColumbiaLogo} alt="Columbia Logo" className="logo" />
+        <img src={ColumbiaLogo} alt="Columbia Logo" className="logo" onClick={() => navigate('/home')} />
 
         <div className="search-bar">
           <Input.Search

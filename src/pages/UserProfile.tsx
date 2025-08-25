@@ -76,8 +76,9 @@ const ProfilePage = () => {
     try {
       const decoded = jwtDecode<JwtPayload>(token);
       setUserEmail(decoded.email);
-    } catch (err) {
+    } catch (error) {
       message.error("Invalid token");
+      console.log(error);
       navigate("/login");
     }
   }, [token, navigate]);

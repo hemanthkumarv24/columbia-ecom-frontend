@@ -43,50 +43,52 @@ const ProductForm: React.FC = () => {
   const handleRemoveImageUrl = (url: string) => {
     setImageUrls(imageUrls.filter(u => u !== url));
   };
-const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
+  const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.auth.token);
-console.log(token)
-const handleSubmit = async (values: ProductUpdateFormValues) => {
-  const formData = new FormData();
+  // console.log(token)
 
-  formData.append('name', values.name);
-  formData.append('description', values.description || '');
-  formData.append('price', values.price.toString());
 
-  fileList.forEach((file) => {
-    if (file.originFileObj) {
-      formData.append('images', file.originFileObj);
-    }
-  });
+  const handleSubmit = async (values: ProductUpdateFormValues) => {
+    const formData = new FormData();
 
-  imageUrls.forEach((url) => {
-    formData.append('imageUrls', url);
-  });
+    formData.append('name', values.name);
+    formData.append('description', values.description || '');
+    formData.append('price', values.price.toString());
 
-  try {
-    const response = await axios.post(`${apiUrl}/Products/create`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-
-      },
+    fileList.forEach((file) => {
+      if (file.originFileObj) {
+        formData.append('images', file.originFileObj);
+      }
     });
 
-    const createdProduct = response.data;
-    message.success('Product created successfully!');
-    form.resetFields();
-    setImageUrls([]);
-    setFileList([]);
+    imageUrls.forEach((url) => {
+      formData.append('imageUrls', url);
+    });
 
-    // Redirect to product detail page
-    navigate(`/product/${createdProduct.productID}`);
-  } catch (error: unknown) {
-    message.error('Failed to create product');
-    console.error(error);
-  }
-};
+    try {
+      const response = await axios.post(`${apiUrl}/Products/create`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+
+        },
+      });
+
+      const createdProduct = response.data;
+      message.success('Product created successfully!');
+      form.resetFields();
+      setImageUrls([]);
+      setFileList([]);
+
+      // Redirect to product detail page
+      navigate(`/product/${createdProduct.productID}`);
+    } catch (error: unknown) {
+      message.error('Failed to create product');
+      console.error(error);
+    }
+  };
 
 
 
