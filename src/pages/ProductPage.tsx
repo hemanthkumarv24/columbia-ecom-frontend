@@ -27,8 +27,8 @@ interface Product {
 const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
 
 
-const ProductPage = () => {
-
+const ProductPage = ({userid}:any) => {
+console.log(userid)
     
 const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    axios.get(`${apiUrl}/Products`) // Replace with your actual API endpoint
+    axios.get(`${apiUrl}/Products`) 
       .then(response => {
         setProducts(response.data.$values);
         setLoading(false);
@@ -50,6 +50,7 @@ const navigate = useNavigate();
 
 const handleProductClick = (productID: number) => {
   navigate(`/product/${productID}`);
+
 };
 
   

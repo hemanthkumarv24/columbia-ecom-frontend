@@ -1,6 +1,6 @@
 import "./NavBar.css";
 import ColumbiaLogo from "../../assets/CSC_Logo.webp";
-import { Row, Col, Typography, Space, Input } from "antd";
+import { Row, Col, Typography, Space, Input, Badge } from "antd";
 import { useNavigate } from "react-router-dom";
 import {
   EnvironmentOutlined,
@@ -12,13 +12,15 @@ import {
   ShoppingCartOutlined,
   MenuOutlined,
 } from "@ant-design/icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 const { Text } = Typography;
 
 const NavBar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { cartCount } = useContext(CartContext);
 
   const navItems = [
     { icon: <EnvironmentOutlined />, label: "Store Locator", path: "/store-locator" },
@@ -27,13 +29,21 @@ const NavBar = () => {
     { icon: <CompassOutlined />, label: "Pincode", path: "/pincode" },
     { icon: <UserOutlined />, label: "Account", path: "/profile" },
     { icon: <HeartOutlined />, label: "Wishlist", path: "/wishlist" },
-    { icon: <ShoppingCartOutlined />, label: "Cart", path: "/cart" },
+    {
+      icon: (
+        <Badge count={cartCount} offset={[5, -5]}>
+          <ShoppingCartOutlined />
+        </Badge>
+      ),
+      label: "Cart",
+      path: "/cart",
+    },
   ];
 
   return (
     <header className="navbar">
       <div className="top-nav">
-        <img src={ColumbiaLogo} alt="Columbia Logo" className="logo" />
+        <img src={ColumbiaLogo} alt="Columbia Logo" className="logo" onClick={() => navigate('/home')} />
 
         <div className="search-bar">
           <Input.Search
@@ -46,19 +56,19 @@ const NavBar = () => {
         <div className="hamburger" onClick={() => setMenuOpen(!menuOpen)}>
           <MenuOutlined />
         </div>
-      
 
-      <Row gutter={[16, 16]} className={`nav-icons ${menuOpen ? "open" : ""}`}>
-        {navItems.map(({ icon, label, path }) => (
-          <Col key={label} onClick={() => navigate(path)} className="nav-icon-col">
-            <Space direction="vertical" align="center" className="inner-icons">
-              {icon}
-              <Text>{label}</Text>
-            </Space>
-          </Col>
-        ))}
-      </Row>
-</div>
+        <Row gutter={[16, 16]} className={`nav-icons ${menuOpen ? "open" : ""}`}>
+          {navItems.map(({ icon, label, path }) => (
+            <Col key={label} onClick={() => navigate(path)} className="nav-icon-col">
+              <Space direction="vertical" align="center" className="inner-icons">
+                {icon}
+                <Text>{label}</Text>
+              </Space>
+            </Col>
+          ))}
+        </Row>
+      </div>
+
       <nav className="category-menu">
         {[
           "Men",

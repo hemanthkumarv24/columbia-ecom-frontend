@@ -3,12 +3,12 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 
 interface AuthState {
   token: string | null;
-  id: number | null;
+  userID: number | null;
 }
 
 const initialState: AuthState = {
   token: sessionStorage.getItem("jwtToken") || null,
-  id: sessionStorage.getItem("userId")
+  userID: sessionStorage.getItem("userId")
     ? Number(sessionStorage.getItem("userId"))
     : null,
 };
@@ -21,18 +21,21 @@ const authSlice = createSlice({
       state.token = action.payload;
       sessionStorage.setItem("jwtToken", action.payload);
     },
+    
+    setUserID(state, action: PayloadAction<number>) {
+      state.userID = action.payload;
+      sessionStorage.setItem('userID', action.payload.toString());
+    },
+
     clearToken(state) {
       state.token = null;
-      state.id = null;
+      state.userID = null;
       sessionStorage.removeItem("jwtToken");
       sessionStorage.removeItem("userId");
     },
-    setId(state, action: PayloadAction<number>) {
-      state.id = action.payload;
-      sessionStorage.setItem("userId", action.payload.toString());
-    },
+    
   },
 });
 
-export const { setToken, setId, clearToken } = authSlice.actions;
+export const { setToken, setUserID, clearToken } = authSlice.actions;
 export default authSlice.reducer;

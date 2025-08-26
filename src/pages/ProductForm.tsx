@@ -47,17 +47,19 @@ const ProductForm: React.FC = () => {
 
   const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.auth.token);
-  console.log(token);
+  // console.log(token)
+
+
   const handleSubmit = async (values: ProductUpdateFormValues) => {
     const formData = new FormData();
 
-    formData.append("name", values.name);
-    formData.append("description", values.description || "");
-    formData.append("price", values.price.toString());
+    formData.append('name', values.name);
+    formData.append('description', values.description || '');
+    formData.append('price', values.price.toString());
 
     fileList.forEach((file) => {
       if (file.originFileObj) {
-        formData.append("images", file.originFileObj);
+        formData.append('images', file.originFileObj);
       }
     });
 
@@ -72,9 +74,10 @@ const ProductForm: React.FC = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+      
 
       const createdProduct = response.data;
-      message.success("Product created successfully!");
+      message.success('Product created successfully!');
       form.resetFields();
       setImageUrls([]);
       setFileList([]);
@@ -82,10 +85,12 @@ const ProductForm: React.FC = () => {
       // Redirect to product detail page
       navigate(`/product/${createdProduct.productID}`);
     } catch (error: unknown) {
-      message.error("Failed to create product");
+      message.error('Failed to create product');
       console.error(error);
     }
   };
+
+      
 
   return (
     <div style={styles.container}>
