@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import ProtectedRoute from './store/ProtectedRoute';
-
 import LandingPage from './pages/LandingPage';
 import Login from './pages/LoginPage';
 import EmployeeList from './pages/UserList';
@@ -14,6 +13,7 @@ import DeleteProduct from './pages/DeleteProduct';
 import ProductPage from './pages/ProductPage';
 import AdminPage from './pages/AdminPage';
 import UserProfile from './pages/UserProfile';
+import RegisterForm from './pages/RegisterForm';
 
 function App() {
   return (
@@ -23,6 +23,7 @@ function App() {
           {/* Public Routes */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterForm/>}/>
 
           {/* Protected Routes */}
           <Route element={<ProtectedRoute />}>

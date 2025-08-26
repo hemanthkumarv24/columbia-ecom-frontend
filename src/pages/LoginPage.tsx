@@ -29,8 +29,10 @@ const Login = () => {
         PasswordHash: passwordHash,
       });
       const { token, typeofuser } = response.data;
+      console.log(response.data)
       dispatch(setToken(token));
       message.success('Login successful!');
+
 
     if (typeofuser === 'user') {
       navigate('/home');

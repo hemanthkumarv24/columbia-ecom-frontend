@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Form,
   Input,
@@ -9,13 +9,13 @@ import {
   Typography,
   Divider,
   message,
-} from 'antd';
-import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
-import type { UploadFile } from 'antd/es/upload/interface';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store';
+} from "antd";
+import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
+import type { UploadFile } from "antd/es/upload/interface";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import type { RootState } from "../store/store";
 
 const { Title } = Typography;
 
@@ -33,62 +33,59 @@ const ProductForm: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const handleAddImageUrl = () => {
-    const url = form.getFieldValue('newImageUrl');
+    const url = form.getFieldValue("newImageUrl");
     if (url && !imageUrls.includes(url)) {
       setImageUrls([...imageUrls, url]);
-      form.setFieldsValue({ newImageUrl: '' });
+      form.setFieldsValue({ newImageUrl: "" });
     }
   };
 
   const handleRemoveImageUrl = (url: string) => {
-    setImageUrls(imageUrls.filter(u => u !== url));
+    setImageUrls(imageUrls.filter((u) => u !== url));
   };
-const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
+  const apiUrl = import.meta.env.VITE_PRODUCTS_API_URL;
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
   const token = useSelector((state: RootState) => state.auth.token);
-console.log(token)
-const handleSubmit = async (values: ProductUpdateFormValues) => {
-  const formData = new FormData();
+  console.log(token);
+  const handleSubmit = async (values: ProductUpdateFormValues) => {
+    const formData = new FormData();
 
-  formData.append('name', values.name);
-  formData.append('description', values.description || '');
-  formData.append('price', values.price.toString());
+    formData.append("name", values.name);
+    formData.append("description", values.description || "");
+    formData.append("price", values.price.toString());
 
-  fileList.forEach((file) => {
-    if (file.originFileObj) {
-      formData.append('images', file.originFileObj);
-    }
-  });
-
-  imageUrls.forEach((url) => {
-    formData.append('imageUrls', url);
-  });
-
-  try {
-    const response = await axios.post(`${apiUrl}/Products/create`, formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${token}`,
-
-      },
+    fileList.forEach((file) => {
+      if (file.originFileObj) {
+        formData.append("images", file.originFileObj);
+      }
     });
 
-    const createdProduct = response.data;
-    message.success('Product created successfully!');
-    form.resetFields();
-    setImageUrls([]);
-    setFileList([]);
+    imageUrls.forEach((url) => {
+      formData.append("imageUrls", url);
+    });
 
-    // Redirect to product detail page
-    navigate(`/product/${createdProduct.productID}`);
-  } catch (error: unknown) {
-    message.error('Failed to create product');
-    console.error(error);
-  }
-};
+    try {
+      const response = await axios.post(`${apiUrl}/Products/create`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
+      const createdProduct = response.data;
+      message.success("Product created successfully!");
+      form.resetFields();
+      setImageUrls([]);
+      setFileList([]);
 
+      // Redirect to product detail page
+      navigate(`/product/${createdProduct.productID}`);
+    } catch (error: unknown) {
+      message.error("Failed to create product");
+      console.error(error);
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -102,7 +99,7 @@ const handleSubmit = async (values: ProductUpdateFormValues) => {
         <Form.Item
           label="Product Name"
           name="name"
-          rules={[{ required: true, message: 'Please enter product name' }]}
+          rules={[{ required: true, message: "Please enter product name" }]}
         >
           <Input placeholder="Enter product name" />
         </Form.Item>
@@ -114,10 +111,10 @@ const handleSubmit = async (values: ProductUpdateFormValues) => {
         <Form.Item
           label="Price"
           name="price"
-          rules={[{ required: true, type: 'number', min: 0 }]}
+          rules={[{ required: true, type: "number", min: 0 }]}
         >
           <InputNumber
-            style={{ width: '100%' }}
+            style={{ width: "100%" }}
             placeholder="Enter price"
             prefix="₹"
           />
@@ -178,35 +175,35 @@ const handleSubmit = async (values: ProductUpdateFormValues) => {
 const styles: Record<string, React.CSSProperties> = {
   container: {
     maxWidth: 800,
-    margin: '0 auto',
-    padding: '2rem',
-    background: '#fff',
+    margin: "0 auto",
+    padding: "2rem",
+    background: "#fff",
     borderRadius: 8,
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
   },
   form: {
-    marginTop: '1rem',
+    marginTop: "1rem",
   },
   imagePreview: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '1rem',
-    marginTop: '1rem',
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "1rem",
+    marginTop: "1rem",
   },
   imageItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   image: {
     width: 100,
     height: 100,
-    objectFit: 'cover',
+    objectFit: "cover",
     borderRadius: 4,
-    border: '1px solid #ddd',
+    border: "1px solid #ddd",
   },
   submitButton: {
-    width: '100%',
+    width: "100%",
   },
 };
 

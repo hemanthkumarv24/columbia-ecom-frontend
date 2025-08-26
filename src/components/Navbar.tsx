@@ -23,7 +23,7 @@ const Navbar: React.FC = () => {
 </div>
        <div style={{ display: 'flex', gap: '20px' }}>
         <Link to="/login" style={linkStyle}>Login</Link>
-        <Link to="/" style={linkStyle}>Register</Link>
+        <Link to="/register" style={linkStyle}>Register</Link>
       </div>
 
 
