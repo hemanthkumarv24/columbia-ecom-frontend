@@ -48,7 +48,7 @@ const ProductDetailPage = () => {
       })
       .catch(error => {
         message.error('Failed to load product details');
-        setLoading(false);
+        setLoading(false);     
       });
 
   }, [id]);
